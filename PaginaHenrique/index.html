@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfólio | Henrique Cabral</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<style>
+/* ===== GERAL ===== */
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #0b0b0b; color: #fff; font-family: Arial, sans-serif; }
+.dourado { color: #c9a227; }
+
+/* ===== BOTÕES ===== */
+.btn-dourado { background: #c9a227; color: #111; border: 1px solid #c9a227; font-weight: bold; }
+.btn-dourado:hover { background: #e0b93d; border-color: #e0b93d; color: #111; }
+.btn-outline-dourado { color: #c9a227; border: 1px solid #c9a227; background: transparent; }
+.btn-outline-dourado:hover { background: #c9a227; color: #111; }
+
+/* ===== TELA INICIAL ===== */
+#inicio { min-height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 30px; }
+.inicio-conteudo { width: 100%; max-width: 900px; }
+.foto-perfil { width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid #c9a227; padding: 5px; background: #111; margin-bottom: 25px; }
+.inicio-conteudo h1 { font-size: 4rem; font-weight: bold; margin-bottom: 10px; }
+.linha-dourada { width: 90px; height: 3px; background: #c9a227; margin: 25px auto; }
+.subtitulo { color: #999; font-size: 1.1rem; }
+.menu-inicial { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 35px; }
+.menu-inicial .btn { min-width: 145px; padding: 12px 20px; }
+
+/* ===== PÁGINAS ===== */
+.pagina { min-height: 100vh; padding: 70px 20px; display: none; }
+.pagina.ativa { display: block; }
+.titulo-pagina { border-left: 4px solid #c9a227; padding-left: 15px; margin-bottom: 45px; }
+.titulo-pagina h2 { margin-bottom: 5px; }
+.titulo-pagina p { color: #888; }
+
+/* ===== CARDS ===== */
+.card-escuro { background: #151515; border: 1px solid #292929; border-radius: 12px; padding: 25px; height: 100%; transition: .3s; }
+.card-escuro:hover { border-color: #c9a227; transform: translateY(-3px); }
+.icone { color: #c9a227; font-size: 35px; margin-bottom: 15px; }
+
+/* ===== LINHA DO TEMPO ===== */
+.timeline-container { position: relative; overflow-x: auto; padding: 40px 10px 30px; }
+.timeline { min-width: 850px; position: relative; display: flex; justify-content: space-between; gap: 40px; }
+.timeline::before { content: ""; position: absolute; top: 25px; left: 5%; right: 5%; height: 3px; background: #c9a227; }
+.timeline-item { position: relative; width: 30%; text-align: center; z-index: 1; }
+.timeline-ponto { width: 22px; height: 22px; background: #c9a227; border-radius: 50%; margin: 14px auto 25px; border: 5px solid #0b0b0b; box-shadow: 0 0 0 2px #c9a227; }
+.timeline-data { color: #c9a227; font-weight: bold; font-size: .95rem; margin-bottom: 10px; }
+.timeline-card { background: #151515; border: 1px solid #292929; border-radius: 12px; padding: 20px; min-height: 180px; transition: .3s; }
+.timeline-card:hover { border-color: #c9a227; }
+.timeline-card h5 { margin-bottom: 10px; }
+.timeline-card p { color: #888; margin-bottom: 0; }
+
+/* ===== ABAS ===== */
+.nav-tabs { border-bottom: 1px solid #333; }
+.nav-tabs .nav-link { color: #888; border: none; padding: 12px 20px; }
+.nav-tabs .nav-link:hover { color: #c9a227; }
+.nav-tabs .nav-link.active { color: #c9a227; background: transparent; border-bottom: 2px solid #c9a227; }
+
+/* ===== CERTIFICADOS ===== */
+.certificado { background: #151515; border: 1px solid #292929; border-radius: 12px; padding: 25px; height: 100%; }
+.certificado i { font-size: 35px; color: #c9a227; margin-bottom: 15px; }
+
+/* ===== HABILIDADES ===== */
+.habilidade { background: #151515; border: 1px solid #292929; border-radius: 10px; overflow: hidden; height: 100%; transition: .3s; }
+.habilidade:hover { border-color: #c9a227; }
+.habilidade-imagem { width: 100%; height: 180px; object-fit: cover; }
+.habilidade-conteudo { padding: 20px; }
+.habilidade-conteudo h5 { color: #fff; margin-bottom: 5px; }
+.habilidade-conteudo p { color: #888; margin: 0; }
+
+/* ===== CONTATO ===== */
+.contato-card { max-width: 700px; margin: auto; background: #151515; border: 1px solid #292929; border-radius: 15px; padding: 40px; text-align: center; }
+.contato-botoes { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
+.dropdown-menu { background: #151515; border: 1px solid #c9a227; padding: 5px; }
+.dropdown-item { color: #fff; padding: 10px 15px; }
+.dropdown-item:hover { background: #c9a227; color: #111; }
+
+/* ===== ACORDEÃO ===== */
+.accordion-item { background: #151515; border: 1px solid #333; }
+.accordion-button { background: #151515; color: #fff; box-shadow: none; }
+.accordion-button:not(.collapsed) { background: #1d1d1d; color: #c9a227; box-shadow: none; }
+.accordion-button:focus { box-shadow: none; }
+.accordion-body { background: #151515; color: #aaa; }
+
+/* ===== RODAPÉ ===== */
+footer { text-align: center; color: #666; padding: 30px; }
+
+/* ===== CELULAR ===== */
+@media (max-width: 600px) {
+  .inicio-conteudo h1 { font-size: 2.8rem; }
+  .foto-perfil { width: 140px; height: 140px; }
+  .menu-inicial { flex-direction: column; }
+  .menu-inicial .btn { width: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== TELA INICIAL ===== -->
+<section id="inicio">
+  <div class="inicio-conteudo">
+    <div class="mb-3">
+      <a href="../AgroVision/index.html#desenvolvedores" class="dourado text-decoration-none"><i class="bi bi-arrow-left"></i> Voltar ao Agrovision</a>
+    </div>
+    <img src="img/Perfil.jpeg" alt="Foto de Henrique Cabral" class="foto-perfil" id="fotoPerfil">
+    <p class="dourado mb-2">PORTFÓLIO PROFISSIONAL</p>
+    <h1>Henrique Cabral</h1>
+    <div class="linha-dourada"></div>
+    <p class="subtitulo">Técnico Eletromecânico | Construção | Tecnologia</p>
+
+    <div class="menu-inicial">
+      <button class="btn btn-outline-dourado" onclick="mostrarPagina('sobre')"><i class="bi bi-person"></i> Sobre mim</button>
+      <button class="btn btn-outline-dourado" onclick="mostrarPagina('formacao')"><i class="bi bi-mortarboard"></i> Formação</button>
+      <button class="btn btn-outline-dourado" onclick="mostrarPagina('habilidades')"><i class="bi bi-tools"></i> Habilidades</button>
+      <button class="btn btn-dourado" onclick="mostrarPagina('contato')"><i class="bi bi-envelope"></i> Contato</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOBRE MIM ===== -->
+<section id="sobre" class="pagina">
+  <div class="container">
+    <button class="btn btn-outline-dourado mb-4" onclick="voltarInicio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <div class="titulo-pagina">
+      <h2>Sobre mim</h2>
+      <p>Um pouco sobre minha trajetória.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="card-escuro">
+          <img src="img/Perfil.jpeg" alt="Henrique Cabral" class="rounded-circle" width="60" height="60">
+          <h4 class="mt-2">Henrique Cabral</h4>
+          <p class="text-secondary">Tenho 18 anos e sou Técnico Eletromecânico, atualmente cursando Técnico em Construção de Edificações e Tecnólogo em Análise e Desenvolvimento de Sistemas.</p>
+          <p class="text-secondary">Estou em constante desenvolvimento profissional e acadêmico, buscando ampliar meus conhecimentos em tecnologia, manutenção, automação, desenvolvimento de sistemas e construção civil.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card-escuro">
+          <i class="bi bi-info-circle icone"></i>
+          <h5>Informações</h5>
+          <p class="text-secondary"><strong>Idade:</strong> 18 anos</p>
+          <p class="text-secondary"><strong>Local:</strong> Ribeirão Preto - SP</p>
+          <p class="text-secondary"><strong>Profissão:</strong> Técnico Eletromecânico</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FORMAÇÃO ===== -->
+<section id="formacao" class="pagina">
+  <div class="container">
+    <button class="btn btn-outline-dourado mb-4" onclick="voltarInicio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <div class="titulo-pagina">
+      <h2>Formação</h2>
+      <p>Minha trajetória acadêmica.</p>
+    </div>
+
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#abaFormacao"><i class="bi bi-mortarboard"></i> Formação</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#abaCertificados"><i class="bi bi-award"></i> Certificados</button></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Aba: Formação -->
+      <div class="tab-pane fade show active" id="abaFormacao">
+        <div class="timeline-container">
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-data">2024 — 2025</div>
+              <div class="timeline-ponto"></div>
+              <div class="timeline-card">
+                <i class="bi bi-gear-wide-connected dourado fs-2"></i>
+                <h5>Técnico Eletromecânico</h5>
+                <p>Formação concluída.</p>
+                <small class="dourado">Início: Jan 2024<br>Conclusão: Dez 2025</small>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-data">2026</div>
+              <div class="timeline-ponto"></div>
+              <div class="timeline-card">
+                <i class="bi bi-building dourado fs-2"></i>
+                <h5>Técnico em Construção de Edificações</h5>
+                <p>Curso em andamento.</p>
+                <small class="dourado">Início: Jan 2026<br>Conclusão prevista: Dez 2026</small>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-data">2026 — 2027</div>
+              <div class="timeline-ponto"></div>
+              <div class="timeline-card">
+                <i class="bi bi-code-slash dourado fs-2"></i>
+                <h5>ADS</h5>
+                <p>Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas.</p>
+                <small class="dourado">Início: Jan 2026<br>Conclusão prevista: Dez 2027</small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="accordion mt-5" id="accordionFormacao">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#objetivoFormacao">Objetivo profissional</button>
+            </h2>
+            <div id="objetivoFormacao" class="accordion-collapse collapse" data-bs-parent="#accordionFormacao">
+              <div class="accordion-body">Aplicar meus conhecimentos, adquirir experiência e continuar evoluindo profissionalmente, sempre com responsabilidade, dedicação e vontade de aprender.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba: Certificados -->
+      <div class="tab-pane fade" id="abaCertificados">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="certificado">
+              <i class="bi bi-award"></i>
+              <h5>Lógica de Programação</h5>
+              <img src="img/Certificado 1.png" alt="Lógica de Programação" class="img-fluid rounded mt-3">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="certificado">
+              <i class="bi bi-award"></i>
+              <h5>Segurança Cibernética</h5>
+              <img src="img/Certificado 2.png" alt="Segurança Cibernética" class="img-fluid rounded mt-3">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="certificado">
+              <i class="bi bi-award"></i>
+              <h5>Fundamentos da IA</h5>
+              <img src="img/Certificado 3.png" alt="Fundamentos da IA" class="img-fluid rounded mt-3">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== HABILIDADES ===== -->
+<section id="habilidades" class="pagina">
+  <div class="container">
+    <button class="btn btn-outline-dourado mb-4" onclick="voltarInicio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <div class="titulo-pagina">
+      <h2>Habilidades</h2>
+      <p>Conhecimentos e projetos desenvolvidos.</p>
+    </div>
+
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#abaHabilidades"><i class="bi bi-tools"></i> Habilidades</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#abaProjetos"><i class="bi bi-folder"></i> Projetos</button></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Aba: Habilidades (para colocar foto, preencha o src="") -->
+      <div class="tab-pane fade show active" id="abaHabilidades">
+        <div class="row g-4">
+
+          <!-- Eletromecânica -->
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="SolidWorks">
+            <div class="habilidade-conteudo"><h5>Projetos 3D SolidWorks</h5><p>Eletromecânica</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Desenho Técnico">
+            <div class="habilidade-conteudo"><h5>Desenho Técnico</h5><p>Eletromecânica</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Operação de Fresa">
+            <div class="habilidade-conteudo"><h5>Operação de Fresa</h5><p>Eletromecânica</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Operação de Torno">
+            <div class="habilidade-conteudo"><h5>Operação de Torno</h5><p>Eletromecânica</p></div>
+          </div></div>
+
+          <!-- Construção -->
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Alvenaria">
+            <div class="habilidade-conteudo"><h5>Construção em Alvenaria</h5><p>Construção</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Drywall">
+            <div class="habilidade-conteudo"><h5>Construção em Drywall</h5><p>Construção</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Stellframe">
+            <div class="habilidade-conteudo"><h5>Construção em Stellframe</h5><p>Construção</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-3"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Carpintaria">
+            <div class="habilidade-conteudo"><h5>Carpintaria</h5><p>Construção</p></div>
+          </div></div>
+
+          <!-- ADS -->
+          <div class="col-md-6 col-lg-4"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="MySQL">
+            <div class="habilidade-conteudo"><h5>Banco de Dados MySQL</h5><p>Análise e Desenvolvimento de Sistemas</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-4"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Front-End">
+            <div class="habilidade-conteudo"><h5>Front-End</h5><p>Análise e Desenvolvimento de Sistemas</p></div>
+          </div></div>
+
+          <div class="col-md-6 col-lg-4"><div class="habilidade">
+            <img src="" class="habilidade-imagem" alt="Back-End">
+            <div class="habilidade-conteudo"><h5>Back-End</h5><p>Análise e Desenvolvimento de Sistemas</p></div>
+          </div></div>
+
+        </div>
+
+        <div class="text-center mt-5">
+          <button type="button" class="btn btn-outline-dourado" data-bs-toggle="popover" data-bs-title="Habilidades" data-bs-content="As habilidades estão divididas entre Eletromecânica, Construção e ADS." data-bs-placement="bottom">
+            <i class="bi bi-info-circle"></i> Sobre minhas habilidades
+          </button>
+        </div>
+      </div>
+
+      <!-- Aba: Projetos -->
+      <div class="tab-pane fade" id="abaProjetos">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="card-escuro">
+              <i class="bi bi-folder2-open icone"></i>
+              <h4>LucroCerto</h4>
+              <h4>Sistema de Gestão e Formação de Preços</h4>
+              <p class="text-secondary">Sistema desenvolvido para auxiliar no cálculo de custos, formação de preços, margem de lucro e ponto de equilíbrio de produtos.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card-escuro">
+              <i class="bi bi-folder2-open icone"></i>
+              <h4>AVA</h4>
+              <h4>Sistema de Gestão para Clínica Veterinária</h4>
+              <p class="text-secondary">Sistema web desenvolvido para auxiliar na gestão interna da clínica, incluindo controle de estoque e acompanhamento de produtos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTATO ===== -->
+<section id="contato" class="pagina">
+  <div class="container">
+    <button class="btn btn-outline-dourado mb-4" onclick="voltarInicio()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <div class="titulo-pagina">
+      <h2>Contato</h2>
+      <p>Entre em contato comigo.</p>
+    </div>
+
+    <div class="contato-card">
+      <i class="bi bi-chat-dots dourado" style="font-size:45px;"></i>
+      <h3 class="mt-3">Vamos conversar?</h3>
+      <p class="text-secondary">Estou disponível para oportunidades, projetos e contatos profissionais.</p>
+
+      <div class="contato-botoes">
+        <a href="https://wa.me/5516982228833" target="_blank" class="btn btn-outline-dourado"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        <a href="https://www.linkedin.com/in/henrique-cabral-0b7b033b8?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="btn btn-outline-dourado"><i class="bi bi-linkedin"></i> LinkedIn</a>
+
+        <div class="dropdown">
+          <button class="btn btn-dourado dropdown-toggle" type="button" data-bs-toggle="dropdown"><i class="bi bi-envelope"></i> E-mail</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="https://mail.google.com/mail/?view=cm&fs=1&to=henriquecabralcorreia@gmail.com" target="_blank"><i class="bi bi-google"></i> Gmail</a></li>
+            <li><a class="dropdown-item" href="https://outlook.live.com/mail/0/deeplink/compose?to=henriquecabralcorreia@gmail.com" target="_blank"><i class="bi bi-microsoft"></i> Outlook</a></li>
+            <li><a class="dropdown-item" href="mailto:henriquecabralcorreia@gmail.com"><i class="bi bi-envelope"></i> Outro aplicativo</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Henrique Cabral © 2026</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Abre uma página e esconde a tela inicial
+  function mostrarPagina(pagina) {
+    document.getElementById("inicio").style.display = "none";
+    document.querySelectorAll(".pagina").forEach(e => e.classList.remove("ativa"));
+    document.getElementById(pagina).classList.add("ativa");
+    window.scrollTo(0, 0);
+  }
+
+  // Volta para a tela inicial
+  function voltarInicio() {
+    document.querySelectorAll(".pagina").forEach(e => e.classList.remove("ativa"));
+    document.getElementById("inicio").style.display = "flex";
+    window.scrollTo(0, 0);
+  }
+
+  // Esconde as imagens das habilidades que estão sem foto
+  document.querySelectorAll(".habilidade-imagem").forEach(img => {
+    if (!img.getAttribute("src")) img.style.display = "none";
+  });
+
+  // Esconde a foto de perfil se ela não existir
+  const foto = document.getElementById("fotoPerfil");
+  if (!foto.getAttribute("src")) foto.style.display = "none";
+
+  // Ativa o balãozinho do botão "Sobre minhas habilidades"
+  document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => new bootstrap.Popover(el));
+</script>
+
+</body>
+</html>
